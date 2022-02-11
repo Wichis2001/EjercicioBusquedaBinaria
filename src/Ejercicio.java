@@ -12,9 +12,8 @@ public class Ejercicio {
         arreglo = new int[valor];
 
         for(int i = 0; i < arreglo.length; i++){
-            int aleatorio = (int)(Math.random()*10000);
+            int aleatorio = (int)(Math.random()*100);
             push(aleatorio, i);
-
 
         }
 
@@ -59,14 +58,10 @@ public class Ejercicio {
             if(dato <= arreglo[i] && i < indice){
 
                 for(int j = indice; j>i; j--){
-
                     arreglo[j] = arreglo[j-1];
-
                 }
                 arreglo[i] = dato;
-
                 break;
-
             } else{
 
                 if(indice == i){
@@ -85,28 +80,38 @@ public class Ejercicio {
         int busqueda = (limSup + limInf) / 2;
         boolean encontrado = false;
 
-        do{
-            System.out.println(arreglo[busqueda]+" - "+valor);
+        while (!encontrado){
+
+            System.out.println(arreglo[busqueda]+" - "+valor+" Busqueda: "+busqueda);
+            System.out.println("sup: "+limSup+" inf: "+limInf);
             if(arreglo[busqueda] > valor){
                 pasos++;
-                if((limSup == arreglo.length) && (busqueda - limInf == 1)){
+                limSup = busqueda;
+
+                if(busqueda == 0){
                     break;
-                } else {
-                    limSup = busqueda;
+                } else if (arreglo[busqueda -1] < valor){
+                    pasos++;
+                    break;
                 }
+
             } else if (arreglo[busqueda] < valor){
                 pasos++;
-                if((limSup - busqueda == 1) && (limInf == 0)){
+                limInf = busqueda;
+
+                if(busqueda == arreglo.length-1){
                     break;
-                } else {
-                    limInf = busqueda;
+                } else if(arreglo[busqueda+1] > valor){
+                    pasos++;
+                    break;
                 }
+
             } else {
                 pasos++;
                 encontrado = true;
             }
             busqueda = (limSup + limInf) / 2;
-        }while(!encontrado);
+        }
 
         return pasos;
     }
